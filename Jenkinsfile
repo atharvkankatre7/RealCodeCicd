@@ -67,29 +67,19 @@ pipeline {
     }
 
     stage('Push Images to Nexus') {
+      // Temporarily disabled because Nexus registry is not reachable from Jenkins
+      when { expression { return false } }
       steps {
-        withCredentials([usernamePassword(
-          credentialsId: 'nexus-2401090',
-          usernameVariable: 'NEXUS_USER',
-          passwordVariable: 'NEXUS_PASS'
-        )]) {
-          sh """
-            echo $NEXUS_PASS | docker login ${DOCKER_REGISTRY} -u $NEXUS_USER --password-stdin
-
-            docker tag ${IMAGE_NAME_SERVER}:latest ${DOCKER_REGISTRY}/${IMAGE_NAME_SERVER}:latest
-            docker tag ${IMAGE_NAME_CLIENT}:latest ${DOCKER_REGISTRY}/${IMAGE_NAME_CLIENT}:latest
-
-            docker push ${DOCKER_REGISTRY}/${IMAGE_NAME_SERVER}:latest
-            docker push ${DOCKER_REGISTRY}/${IMAGE_NAME_CLIENT}:latest
-          """
-        }
+        echo "Nexus registry unreachable — push skipped"
       }
     }
 
-    stage('Deploy with Docker Compose') {
+    stage('Deploy') {
       steps {
         sh """
-          docker-compose down || true
+          cd /opt/realcodecicd
+          git pull origin main
+          docker-compose down
           docker-compose up -d --build
         """
       }
