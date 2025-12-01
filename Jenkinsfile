@@ -81,13 +81,15 @@ pipeline {
       when { expression { return false } }
       steps {
         withCredentials([usernamePassword(
-          credentialsId: 'nexus-2401090',
+          // Your Nexus credential ID from Jenkins: "2401090-RealCode"
+          credentialsId: '2401090-RealCode',
           usernameVariable: 'NEXUS_USER',
           passwordVariable: 'NEXUS_PASS'
         )]) {
           sh '''
             set -e
-            echo "Push to Nexus disabled in Jenkinsfile (when { return false }); this should not run."
+            echo "Push to Nexus is currently disabled (when { return false })."
+            echo "When you enable it, this stage will use NEXUS_USER/NEXUS_PASS to login and push images."
           '''
         }
       }
