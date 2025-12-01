@@ -3,7 +3,8 @@ pipeline {
 
   tools {
     // Uses the NodeJS tool configured in Jenkins (Manage Jenkins -> Global Tool Configuration)
-    nodejs 'NodeJS'
+    // Name must match the NodeJS installation in Jenkins (you have it as "node18")
+    nodejs 'node18'
   }
 
   environment {
