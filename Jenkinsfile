@@ -1,6 +1,11 @@
 pipeline {
   agent any
 
+  tools {
+    // Uses the NodeJS tool configured in Jenkins (Manage Jenkins -> Global Tool Configuration)
+    nodejs 'NodeJS'
+  }
+
   environment {
     SONARQUBE_ENV     = 'sonarqube-imcc'
     // TODO: update this when you know the exact Nexus Docker host:port
