@@ -1,12 +1,6 @@
 pipeline {
   agent any
 
-  tools {
-    // Uses the NodeJS tool configured in Jenkins (Manage Jenkins -> Global Tool Configuration)
-    // Name must match the NodeJS installation in Jenkins (you have it as "node18")
-    nodejs 'node18'
-  }
-
   environment {
     SONARQUBE_ENV     = 'sonarqube-imcc'
     // TODO: update this when you know the exact Nexus Docker host:port
